@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Nunito', sans-serif;
+}
+
+::selection {
+    color: #000000;
+    background-color: rgba(255, 255, 255, 0.5) ;
+  }
+
+/* Assigning colors to variables */
+:root {
+    --bg-color: #171F38;
+    --snd-bf-color: #262840;
+    --text-color: #fff;
+    --main-color: #5982f4;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--bg-color);
+    width: 100%;
+    padding: 2rem 9%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+#header-name {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    cursor: default;
+}
+
+.navbar {
+    display: flex;
+}
+
+.navbar a {
+    color: var(--text-color);
+    font-size: 1.78rem;
+    margin-left: 4rem;
+    font-weight: 700;
+    position: relative;     
+}
+
+.navbar a::before {
+    content: ""; 
+    position: absolute;
+    background-color: var(--main-color);
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: -10px;
+    transition: 0.3s;
+}
+
+.navbar a:hover::before {
+    width: 100%;
+}
