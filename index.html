@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD Operations</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      text-decoration: none;
+      border: none;
+      outline: none;
+      scroll-behavior: smooth;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    ::selection {
+      color: #000000;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Assigning colors to variables */
+    :root {
+      --bg-color: #171F38;
+      --snd-bf-color: #262840;
+      --text-color: #fff;
+      --main-color: #5982f4;
+      --link-color: #FFC107; /* New color for links */
+      --box-color: #394d5e; /* New color for box */
+      --btn-color: #007bff; /* New color for buttons */
+      --btn-hover-color: #0056b3; /* New hover color for buttons */
+    }
+
+    html {
+      font-size: 62.5%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: var(--bg-color);
+      width: 100%;
+      padding: 2rem 9%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      animation: slideDown 1s ease-in-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    #header-name {
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--text-color);
+      cursor: default;
+    }
+
+    .navbar {
+      display: flex;
+    }
+
+    .navbar a {
+      color: var(--text-color);
+      font-size: 1.78rem;
+      margin-left: 4rem;
+      font-weight: 700;
+      position: relative;
+      animation: fadeIn 2s ease-in;
+    }
+
+    .navbar a::before {
+      content: ""; 
+      position: absolute;
+      background-color: var(--main-color);
+      height: 3px;
+      width: 0;
+      left: 0;
+      bottom: -10px;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover::before {
+      width: 100%;
+    }
+
+    .container {
+      color: var(--text-color);
+      margin: 18% auto;
+      text-align: center;
+      animation: fadeIn 2s ease-in;
+      background-color: var(--box-color); /* Adding background color for the container */
+      padding: 2rem; /* Adding padding for the container */
+      border-radius: 1rem; /* Adding border radius for the container */
+      display: flex;
+      flex-direction: column; /* Arrange children elements vertically */
+      justify-content: center; /* Horizontally center-align the content */
+      align-items: center; /* Vertically center-align the content */
+      width: 50%; /* Adjust the width as per your requirement */
+    }
+
+    .container h1 {
+      font-size: 4rem;
+    }
+
+    .container ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .container li {
+      margin: 1rem 0;
+      font-size: 2.5rem;
+    }
+
+    .container a {
+      color: #fff; /* Change text color to white */
+      text-decoration: none;
+      transition: color 0.3s, transform 0.3s;
+      display: inline-block; /* Displaying links as inline-block */
+      padding: 1rem 2rem; /* Adding padding to links */
+      border-radius: 1rem; /* Adding border radius to links */
+      background-color: var(--btn-color); /* Adding background color to links */
+    }
+
+    .container a:hover {
+      text-decoration: none;
+      color: var(--text-color);
+      background-color: var(--btn-hover-color); /* Changing background color on hover */
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="header">
+    <a href="/" id="header-name"><span>Student Management System</span></a>
+    <nav class="navbar">
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1 class="text-center">Operations</h1>
+    <ul class="list-group mt-4">
+      <li class="list-group-item"><a href="/register">Enter Student Details</a></li>
+      <li class="list-group-item"><a href="/login">Admin Login</a></li>
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        border: none;
+        outline: none;
+        scroll-behavior: smooth;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    ::selection {
+        color: #000000;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Assigning colors to variables */
+    :root {
+        --bg-color: #171F38;
+        --snd-bf-color: #262840;
+        --text-color: #fff;
+        --main-color: #5982f4;
+        --link-color: #FFC107;
+        --button-hover-color: #218838;
+        --label-color: #FFD700;
+    }
+
+    html {
+        font-size: 62.5%;
+        overflow-x: hidden;
+    }
+
+    body {
+        background: var(--bg-color);
+        color: var(--text-color);
+        animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: var(--bg-color);
+        width: 100%;
+        padding: 2rem 9%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        animation: slideDown 1s ease-in-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            transform: translateY(-100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    #header-name {
+        font-size: 3.2rem;
+        font-weight: 700;
+        color: var(--text-color);
+        cursor: default;
+    }
+
+    .navbar {
+        display: flex;
+    }
+
+    .navbar a {
+        color: var(--text-color);
+        font-size: 1.78rem;
+        margin-left: 4rem;
+        font-weight: 700;
+        position: relative;
+        animation: fadeIn 2s ease-in;
+    }
+
+    .navbar a::before {
+        content: "";
+        position: absolute;
+        background-color: var(--main-color);
+        height: 3px;
+        width: 0;
+        left: 0;
+        bottom: -10px;
+        transition: 0.3s;
+    }
+
+    .navbar a:hover::before {
+        width: 100%;
+    }
+
+    .container {
+        color: var(--text-color);
+        margin: 18% auto;
+        text-align: center;
+        animation: fadeIn 2s ease-in;
+    }
+
+    .container h2 {
+        font-size: 4rem;
+    }
+
+    .container ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .container li {
+        margin: 2rem 0;
+        font-size: 2.5rem;
+    }
+
+    .container a {
+        color: var(--link-color);
+        text-decoration: none;
+        transition: color 0.3s, transform 0.3s;
+    }
+
+    .container a:hover {
+        text-decoration: underline;
+        color: var(--main-color);
+        transform: scale(1.1);
+    }
+
+    form {
+        background-color: var(--snd-bf-color);
+        padding: 2rem;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        max-width: 400px;
+        margin: 0 auto;
+        animation: fadeIn 2s ease-in;
+    }
+
+    form div {
+        margin-bottom: 2rem;
+        width: 100%;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 1.6rem;
+        color: var(--label-color);
+    }
+
+    form input[type="text"],
+    form input[type="password"] {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.6rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+    }
+
+    form input[type="text"]:focus,
+    form input[type="password"]:focus {
+        border-color: var(--main-color);
+    }
+
+    form button {
+        padding: 1rem 2rem;
+        background-color: #28a745;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 1.6rem;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    form button:hover {
+        background-color: var(--button-hover-color);
+        transform: scale(1.05);
+    }
+
+    form button:active {
+        transform: scale(0.95);
+    }
+</style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div id="container">
+        <header class="header">
+            <a href="/" id="header-name"><span>Student Management System</span></a>
+            <nav class="navbar">
+                <a href="/">Home</a>
+                <a href="/login">Login</a>
+            </nav>
+        </header>
+
+        <div class="container">
+            <h2>Login</h2>
+            <form action="/login" method="post">
+                <div>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

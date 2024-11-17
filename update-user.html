@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            scroll-behavior: smooth;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        ::selection {
+            color: #000000;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Assigning colors to variables */
+        :root {
+            --bg-color: #171F38;
+            --snd-bf-color: #262840;
+            --text-color: #fff;
+            --main-color: #5982f4;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: var(--bg-color);
+            width: 100%;
+            padding: 2rem 9%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        #header-name {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            cursor: default;
+        }
+
+        .navbar {
+            display: flex;
+        }
+
+        .navbar a {
+            color: var(--text-color);
+            font-size: 1.78rem;
+            margin-left: 4rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .navbar a::before {
+            content: "";
+            position: absolute;
+            background-color: var(--main-color);
+            height: 3px;
+            width: 0;
+            left: 0;
+            bottom: -10px;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover::before {
+            width: 100%;
+        }
+
+        .update-container {
+            margin: 10% auto;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        h2 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            color: var(--text-color);
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            border-radius: 0.5rem;
+            border: 1px solid #ccc;
+            background-color: var(--snd-bf-color);
+            color: var(--text-color);
+        }
+
+        button[type="submit"] {
+            padding: 1rem 2rem;
+            font-size: 1.6rem;
+            color: #fff;
+            background-color: var(--main-color);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-align: center;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #4764a0;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="header">
+        <a href="/" id="header-name"><span>Student Management System</span></a>
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="">Hello, Admin </a>
+        </nav>
+    </header>
+    <div class="update-container">
+        <h2>Update User</h2>
+        <form action="/update-user" method="post">
+            <input type="hidden" name="userId" value="">
+            <label for="rollno">Roll No</label>
+            <input type="text" id="rollno" name="rollno" required>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone" required>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" required>
+            <label for="dob">Date of Birth</label>
+            <input type="text" id="dob" name="dob" required>
+            <label for="fathersname">Father's Name</label>
+            <input type="text" id="fathersname" name="fathersname" required>
+            <label for="mothersname">Mother's Name</label>
+            <input type="text" id="mothersname" name="mothersname" required>
+            <label for="parentsphone">Parents' Phone</label>
+            <input type="text" id="parentsphone" name="parentsphone" required>
+            <label for="gender">Gender</label>
+            <input type="text" id="gender" name="gender" required>
+            <label for="course">Course</label>
+            <input type="text" id="course" name="course" required>
+            <label for="branch">Branch</label>
+            <input type="text" id="branch" name="branch" required>
+            <label for="section">Section</label>
+            <input type="text" id="section" name="section" required>
+            <label for="year">Year</label>
+            <input type="text" id="year" name="year" required>
+            <label for="residencestatus">Residence Status</label>
+            <input type="text" id="residencestatus" name="residencestatus" required>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+    <script>
+        // Populate the form with existing user data
+        function populateForm(user) {
+            document.querySelector('input[name="userId"]').value = user._id;
+            document.querySelector('input[name="rollno"]').value = user.rollno;
+            document.querySelector('input[name="name"]').value = user.name;
+            document.querySelector('input[name="phone"]').value = user.phone;
+            document.querySelector('input[name="email"]').value = user.email;
+            document.querySelector('input[name="dob"]').value = user.dob;
+            document.querySelector('input[name="fathersname"]').value = user.fathersname;
+            document.querySelector('input[name="mothersname"]').value = user.mothersname;
+            document.querySelector('input[name="parentsphone"]').value = user.parentsphone;
+            document.querySelector('input[name="gender"]').value = user.gender;
+            document.querySelector('input[name="course"]').value = user.course;
+            document.querySelector('input[name="branch"]').value = user.branch;
+            document.querySelector('input[name="section"]').value = user.section;
+            document.querySelector('input[name="year"]').value = user.year;
+            document.querySelector('input[name="residencestatus"]').value =
+            user.residencestatus;
+        }
+
+        // Fetch the user data and populate the form
+        (async function () {
+            const params = new URLSearchParams(window.location.search);
+            const userId = params.get('userId');
+            console.log(userId)
+            if (userId) {
+                const response = await fetch('/user?userId=' + userId);
+                const user = await response.json();
+                populateForm(user);
+            }
+        })();
+    </script>
+</body>
+
+</html>

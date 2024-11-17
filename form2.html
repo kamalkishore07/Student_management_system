@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPA Calculator</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        border: none;
+        outline: none;
+        scroll-behavior: smooth;
+        font-family: 'Nunito', sans-serif;
+    }
+    ::selection {
+        color: #000000;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    body {
+        background-color: #171F38;
+        color: #fff;
+        font-size: 16px;
+    }
+
+    /* Header styles */
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #171F38;
+        width: 100%;
+        padding: 2rem 9%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+    }
+
+    #header-name {
+        font-size: 3.2rem;
+        font-weight: 700;
+        color: #fff;
+        cursor: default;
+    }
+
+    .navbar {
+        display: flex;
+    }
+
+    .navbar a {
+        color: #fff;
+        font-size: 1.78rem;
+        margin-left: 4rem;
+        font-weight: 700;
+        position: relative;
+    }
+
+    .navbar a::before {
+        content: "";
+        position: absolute;
+        background-color: #5982f4;
+        height: 3px;
+        width: 0;
+        left: 0;
+        bottom: -10px;
+        transition: 0.3s;
+    }
+
+    .navbar a:hover::before {
+        width: 100%;
+    }
+
+    /* Container styles */
+    .container {
+        margin: 18% auto;
+        max-width: 800px;
+        padding: 20px;
+        background-color: #262840;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        animation: slideInFromLeft 1s ease forwards;
+    }
+
+    @keyframes slideInFromLeft {
+        0% {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Form styles */
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    label {
+        font-size: 1.4rem;
+        margin-bottom: 5px;
+        color: #5982f4;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 10px;
+        font-size: 1.6rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #171F38;
+        color: #fff;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .btn {
+    padding: 8px 16px;  /* reduced padding */
+    font-size: 1.2rem;  /* reduced font size */
+    color: #fff;
+    background-color: #5982f4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    /* List group styles */
+    .list-group {
+        margin-top: 30px;
+    }
+
+    .list-group-item a {
+        color: #5982f4;
+        font-size: 1.6rem;
+        text-decoration: none;
+    }
+
+    .list-group-item a:hover {
+        text-decoration: underline;
+    }
+
+    /* Card styles */
+    .card {
+        background-color: #1e2a45;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-bottom: 20px;
+    }
+
+    .card-title {
+        font-size: 2rem;
+        color: #5982f4;
+        margin-bottom: 15px;
+    }
+
+    .table th,
+    .table td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #171F38;
+        color: #5982f4;
+    }
+
+    .table td {
+        background-color: #262840;
+        color: #fff;
+    }
+
+    .input-group.mb-3 {
+        width: 100%;
+    }
+
+</style>
+</head>
+<body>
+ <!-- Navbar -->
+ <header class="header">
+            <a href="/" id="header-name"><span>Student Management System</span></a>
+            <nav class="navbar">
+                <a href="/">Home</a>
+            </nav>
+        </header>
+
+<div class="container">
+    <h2 class="text-center mb-4">GPA Calculator</h2>
+    
+    <form id="cgpaForm" action="/index" method="post">
+        <input type="hidden" id="userId" name="userId" value="">
+        <input type="hidden" id="rollno" name="rollno" value="">
+        
+        <div class="mb-3 form-group">
+            <label for="semester" class="form-label">Enter the number of Semesters:</label>
+            <input type="number" id="semester" name="semester" class="form-control" onchange="createSemesterTables()">
+        </div>
+
+        <div id="subjectsTableContainer"></div>
+        <div id="semesterGPATable"></div>
+        <div id="output"></div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" onclick="calculateGPA()">Calculate GPA</button>
+            <button type="button" class="btn btn-success" onclick="calculateCGPA()">Calculate CGPA</button>
+            <button type="button" class="btn btn-info" onclick="saveCGPA()">Save CGPA</button>
+        </div>
+    </form>
+    <ul class="list-group mt-4">
+        <li class="list-group-item"><a href="/register" id="showData">Go Back</a></li>
+        
+      </ul>
+</div>
+
+<script>
+    var semesterGPAs = {};
+    var totalSemesters;
+
+    var gradeOptions = [
+        { value: 'O', text: 'O' },
+        { value: 'A+', text: 'A+' },
+        { value: 'A', text: 'A' },
+        { value: 'B+', text: 'B+'},
+        { value: 'B', text: 'B' },
+        { value: 'C', text: 'C' },
+        { value: 'U', text: 'U' }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const rollno = urlParams.get('rollno');
+        const userId = localStorage.getItem('userId');
+
+        if (rollno) {
+            document.getElementById('rollno').value = rollno;
+        }
+        if (userId) {
+            document.getElementById('userId').value = userId;
+        }
+    });
+
+    function createSemesterTables() {
+        var semesterCount = document.getElementById("semester").value;
+        var subjectsTableContainer = document.getElementById("subjectsTableContainer");
+        subjectsTableContainer.innerHTML = '';
+
+        for (var i = 1; i <= semesterCount; i++) {
+            var semesterTable = `
+                <div class="card mb-3" id="semester${i}">
+                    <div class="card-body">
+                        <h3 class="card-title">Semester ${i}</h3>
+                        <table class="table" id="subjectsTable${i}">
+                            <thead>
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Course Name</th>
+                                    <th>Grade</th>
+                                    <th>Credits</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <button type="button" class="btn btn-primary" onclick="addSubject(${i})">Add Subject</button>
+                    </div>
+                </div>
+            `;
+            subjectsTableContainer.innerHTML += semesterTable;
+        }
+        totalSemesters = semesterCount;
+    }
+
+    function calculateGPA() {
+        semesterGPAs = {};
+
+        for (var i = 1; i <= totalSemesters; i++) {
+            var subjectsRows = document.querySelectorAll(`#semester${i} #subjectsTable${i} tbody tr`);
+            var totalCredits = 0;
+            var totalGradePoints = 0;
+            var hasUGrade = false;
+
+            subjectsRows.forEach(function(row) {
+                var grade = row.querySelector('.grade').value.trim().toUpperCase();
+                var credits = parseInt(row.querySelector('.credits').value);
+                if (grade === 'U') {
+                    hasUGrade = true;
+                } else {
+                    totalCredits += credits;
+                    totalGradePoints += getGradePoints(grade) * credits;
+                }
+            });
+
+            var gpa = hasUGrade ? 0 : totalGradePoints / totalCredits;
+            semesterGPAs[i] = gpa;
+        }
+        displaySemesterGPAs();
+    }
+
+    function calculateCGPA() {
+        for (var semester in semesterGPAs) {
+            if (semesterGPAs[semester] === 0) {
+                document.getElementById("output").innerHTML = "<strong>CGPA:</strong> 0";
+                return;
+            }
+        }
+
+        var totalGPA = 0;
+        var validSemesters = 0;
+        
+        for (var semester in semesterGPAs) {
+            totalGPA += semesterGPAs[semester];
+            validSemesters++;
+        }
+
+        if (validSemesters > 0) {
+            var cgpa = (totalGPA / validSemesters).toFixed(2);
+            document.getElementById("output").innerHTML = "<strong>CGPA:</strong> " + cgpa;
+        } else {
+            document.getElementById("output").innerHTML = "<strong>CGPA:</strong> NaN";
+        }
+    }
+    
+    function displaySemesterGPAs() {
+        var table = `
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3 class="card-title">Semester-wise GPA</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Semester</th>
+                                <th>GPA</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
+        for (var semester in semesterGPAs) {
+            table += `
+                <tr>
+                    <td>${semester}</td>
+                    <td>${semesterGPAs[semester].toFixed(2)}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteSemesterGPA('${semester}')">Delete</button>
+                    </td>
+                </tr>
+            `;
+        }
+        table += `
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+        document.getElementById("semesterGPATable").innerHTML = table;
+    }
+
+    function getGradePoints(grade) {
+        switch(grade.toUpperCase()) {
+            case 'O':
+                return 10.0;
+            case 'A+':
+                return 9.0;
+            case 'A':
+                return 8.0;
+            case 'B+':
+                return 7.0;
+            case 'B':
+                return 6.0;
+            case 'C':
+                return 5.0;
+            case 'U':
+                return 0.0; 
+            default:
+                return 0.0;
+        }
+    }
+
+    function addSubject(semester) {
+        var subjectsTable = document.getElementById(`subjectsTable${semester}`).getElementsByTagName('tbody')[0];
+
+        var newRow = subjectsTable.insertRow();
+        var cells = [];
+        for (var i = 0; i < 5; i++) {
+            cells[i] = newRow.insertCell(i);
+        }
+        var selectGrade = document.createElement('select');
+        selectGrade.classList.add('grade');
+        gradeOptions.forEach(function(option) {
+            var gradeOption = document.createElement('option');
+            gradeOption.value = option.value;
+            gradeOption.text = option.text;
+            selectGrade.appendChild(gradeOption);
+        });
+        cells[2].appendChild(selectGrade);
+        cells[0].innerHTML = '<div class="input-group mb-3"><input type="text" class="form-control course-code" placeholder="Course Code"></div>';
+        cells[1].innerHTML = '<div class="input-group mb-3"><input type="text" class="form-control course-name" placeholder="Course Name"></div>';
+        cells[3].innerHTML = '<div class="input-group mb-3"><input type="number" class="form-control credits" placeholder="Credits"></div>';
+        cells[4].innerHTML = '<div class="input-group mb-3"><button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></div>';
+    }
+
+    function deleteRow(btn) {
+        var row = btn.closest('tr');
+        row.parentNode.removeChild(row);
+    }
+
+    function deleteSemesterGPA(semester) {
+        delete semesterGPAs[semester];
+        displaySemesterGPAs();
+    }
+
+    function saveCGPA() {
+        var form = document.getElementById("cgpaForm");
+
+        var semesterData = [];
+        for (var i = 1; i <= totalSemesters; i++) {
+            var subjectsRows = document.querySelectorAll(`#semester${i} #subjectsTable${i} tbody tr`);
+            subjectsRows.forEach(function(row) {
+                var courseCode = row.querySelector('.course-code').value.trim();
+                var courseName = row.querySelector('.course-name').value.trim();
+                var grade = row.querySelector('.grade').value.trim();
+                var credits = parseInt(row.querySelector('.credits').value);
+                semesterData.push({
+                    semester: i,
+                    courseCode: courseCode,
+                    courseName: courseName,
+                    grade: grade,
+                    credits: credits
+                });
+            });
+        }
+
+        var hiddenField = document.createElement("input");
+        hiddenField.type = "hidden";
+        hiddenField.name = "semesterData";
+        hiddenField.value = JSON.stringify(semesterData);
+        form.appendChild(hiddenField);
+
+        var gpaField = document.createElement("input");
+        gpaField.type = "hidden";
+        gpaField.name = "semesterGPAs";
+        gpaField.value = JSON.stringify(semesterGPAs);
+        form.appendChild(gpaField);
+
+        var cgpaField = document.createElement("input");
+        cgpaField.type = "hidden";
+        cgpaField.name = "cgpa";
+        cgpaField.value = document.getElementById("output").textContent.split(' ')[1];
+        form.appendChild(cgpaField);
+
+        form.submit();
+    }
+</script>
+
+</body>
+</html>

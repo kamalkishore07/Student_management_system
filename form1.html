@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            scroll-behavior: smooth;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        ::selection {
+            color: #000000;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        :root {
+            --bg-color: #171F38;
+            --snd-bf-color: #262840;
+            --text-color: #fff;
+            --main-color: #5982f4;
+        }
+        
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+        
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: var(--bg-color);
+            width: 100%;
+            padding: 2rem 9%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        #header-name {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            cursor: default;
+        }
+        
+        .navbar {
+            display: flex;
+        }
+        
+        .navbar a {
+            color: var(--text-color);
+            font-size: 1.78rem;
+            margin-left: 4rem;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .navbar a::before {
+            content: ""; 
+            position: absolute;
+            background-color: var(--main-color);
+            height: 3px;
+            width: 0;
+            left: 0;
+            bottom: -10px;
+            transition: 0.3s;
+        }
+        
+        .navbar a:hover::before {
+            width: 100%;
+        }
+        
+        .container {
+            color: var(--text-color);
+            font-size: 3rem;
+            margin: auto;
+            margin-top: 10%;
+            width: 80%;
+            max-width: 600px;
+            animation: slideInDown 0.5s ease forwards;
+        }
+
+        @keyframes slideInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-50%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-box {
+            background-color: var(--snd-bf-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-size: 1.6rem;
+            border-radius: 0.5rem;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            width: 48%;
+            padding: 1rem 1rem;
+            margin-top: 1rem;
+            font-size: 1.4rem;
+            color: #fff;
+            background-color: var(--main-color);
+            border: none;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #4764a0;
+            transform: scale(1.05);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-group-item a {
+            color: var(--main-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: block;
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--snd-bf-color);
+            border-radius: 1rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .list-group-item a:hover {
+            background-color: var(--main-color);
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        label {
+            font-size: 1.4rem;
+        }
+
+        .error {
+            color: #ff4500;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" id="header-name"><span>Student Management System</span></a>
+        <nav class="navbar">
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h4>User Registration Form</h4>
+        <form id="registrationForm" action="/insert" method="POST" onsubmit="return validateForm()" autocomplete="off">
+            <div class="form-group">
+                <label for="rollno">Roll Number:</label>
+                <input type="text" class="form-control" id="rollno" name="rollno" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" class="form-control" id="phone" name="phone" required>
+                <span class="error" id="phoneError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <span class="error" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" class="form-control" id="dob" name="dob" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fathersname">Father's Name:</label>
+                <input type="text" class="form-control" id="fathersname" name="fathersname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mothersname">Mother's Name:</label>
+                <input type="text" class="form-control" id="mothersname" name="mothersname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="parentsphone">Parent's Phone:</label>
+                <input type="text" class="form-control" id="parentsphone" name="parentsphone" required>
+                <span class="error" id="parentsPhoneError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="course">Course:</label>
+                <select class="form-control" id="course" name="course" required>
+                    <option value="BE">BE</option>
+                    <option value="B.Tech">B.Tech</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="branch">Branch:</label>
+                <select class="form-control" id="branch" name="branch" required>
+                    <option value="CSE">CSE</option>
+                    <option value="IT">IT</option>
+                    <option value="AIML">AIML</option>
+                    <option value="CSD">CSD</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="section">Section:</label>
+                <select class="form-control" id="section" name="section" required>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Year:</label>
+                <select class="form-control" id="year" name="year" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="residencestatus">Residence Status:</label>
+                <select class="form-control" id="residencestatus" name="residencestatus" required>
+                    <option value="Hosteler">Hosteler</option>
+                    <option value="Day Scholar">Day Scholar</option>
+                </select>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn">Submit</button>
+                <button type="button" class="btn" onclick="clearForm()">Clear</button>
+            </div>
+            <ul class="list-group mt-4">
+                <li class="list-group-item"><a href="/" id="showData">Back to Home</a></li>
+            </ul>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            document.getElementById('phoneError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('parentsPhoneError').textContent = '';
+
+            let isValid = true;
+            
+            const phone = document.getElementById('phone').value;
+            if (!/^\d{10}$/.test(phone)) {
+                document.getElementById('phoneError').textContent = ' Phone number must be 10 digits.';
+                isValid = false;
+            }
+
+            const email = document.getElementById('email').value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById('emailError').textContent = ' Invalid email format.';
+                isValid = false;
+            }
+
+            const parentsPhone = document.getElementById('parentsphone').value;
+            if (!/^\d{10}$/.test(parentsPhone)) {
+                document.getElementById('parentsPhoneError').textContent = ' Parent\'s phone number must be 10 digits.';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function clearForm() {
+            document.getElementById('registrationForm').reset();
+            document.getElementById('phoneError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('parentsPhoneError').textContent = '';
+        }
+    </script>
+</body>
+</html>
